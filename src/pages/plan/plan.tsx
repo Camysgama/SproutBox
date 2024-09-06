@@ -1,3 +1,4 @@
+import { LoadingSpinner } from "@/components/spinner/spinner";
 import { UserContext } from "@/context/user-context/user-context";
 import { Plans } from "@/enum/PlanEnum";
 import { ArrowLeft, BanIcon } from "lucide-react";
@@ -56,15 +57,23 @@ export default function Plan() {
           Minha assinatura
         </div>
         <div className="flex items-center justify-between px-6 py-8">
-          <div>{showPlan()}</div>
-          {plan == Plans.none ? null : (
-            <div
-              className="flex cursor-pointer rounded-md p-3 text-red-300 hover:bg-red-400 hover:text-white"
-              onClick={() => handleCancel()}
-            >
-              Cancelar
-              <BanIcon className="ml-2"></BanIcon>
+          {plan == null ? (
+            <div className="flex w-full items-center justify-center">
+              <LoadingSpinner size={40} className="text-green-600" />
             </div>
+          ) : (
+            <>
+              <div>{showPlan()}</div>
+              {plan == Plans.none ? null : (
+                <div
+                  className="flex cursor-pointer rounded-md p-3 text-red-300 hover:bg-red-400 hover:text-white"
+                  onClick={() => handleCancel()}
+                >
+                  Cancelar
+                  <BanIcon className="ml-2"></BanIcon>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
