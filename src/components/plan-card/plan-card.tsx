@@ -1,5 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { UserContext } from "@/context/user-context/user-context";
 import { Plans } from "@/enum/PlanEnum";
+import { useContext } from "react";
+import { PleaseLogin } from "../please-login/please-login";
 
 interface IPlanCard {
   planName: string;
@@ -16,6 +19,8 @@ export default function PlanCard({
   contents,
   plan,
 }: IPlanCard) {
+  const userContext = useContext(UserContext);
+
   const handleButton = async () => {
     const res = await fetch("https://sproutbox-api.onrender.com/checkout", {
       method: "POST",
@@ -31,8 +36,8 @@ export default function PlanCard({
     <div
       className={
         isFocused
-          ? "relative z-0 flex h-[550px] w-[350px] flex-col justify-between rounded-3xl bg-zinc-100 px-10 pb-16 pt-10 shadow-lg transition-shadow duration-500 ease-in-out hover:shadow-2xl"
-          : "relative z-0 flex h-[500px] w-[350px] flex-col justify-between rounded-3xl bg-zinc-100 px-10 pb-16 pt-10 shadow-lg transition-shadow duration-500 ease-in-out hover:shadow-2xl"
+          ? "relative z-0 flex h-[550px] w-[350px] flex-col justify-between rounded-3xl bg-zinc-100 px-10 pb-16 pt-10 shadow-lg transition-shadow duration-500 ease-in-out hover:shadow-2xl hover:shadow-zinc-600"
+          : "relative z-0 flex h-[500px] w-[350px] flex-col justify-between rounded-3xl bg-zinc-100 px-10 pb-16 pt-10 shadow-lg transition-shadow duration-500 ease-in-out hover:shadow-2xl hover:shadow-zinc-600"
       }
     >
       <div className="space-y-6">
@@ -47,14 +52,16 @@ export default function PlanCard({
           ))}
         </ul>
       </div>
-      {/* <form action="https://sproutbox-api.onrender.com/checkout" method="POST"> */}
-      <Button
-        className="w-full rounded-full bg-green-800 uppercase shadow-2xl hover:bg-green-600"
-        onClick={() => handleButton()}
-      >
-        assinar este plano
-      </Button>
-      {/* </form> */}
+      {userContext?.isSignedIn ? (
+        <Button
+          className="w-full rounded-full bg-green-800 uppercase shadow-2xl hover:bg-green-600"
+          onClick={() => handleButton()}
+        >
+          assinar este plano
+        </Button>
+      ) : (
+        <PleaseLogin />
+      )}
       <div className="absolute bottom-0 left-0 -z-[1] rounded-b-3xl border-b-[225px] border-l-[350px] border-box border-l-transparent bg-zinc-100" />
     </div>
   );

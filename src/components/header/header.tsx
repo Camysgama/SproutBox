@@ -53,16 +53,10 @@ export default function Header({ homeRef, plansRef, isSignedIn }: IHeader) {
         </Button>
         <Button
           variant="link"
-          className="mr-10 text-sm font-semibold text-zinc-600 max-xl:mr-6 max-md:mr-0"
+          className="mr-16 text-sm font-semibold text-zinc-600 max-xl:mr-8 max-md:mr-0"
           onClick={() => handlePlans()}
         >
           Planos
-        </Button>
-        <Button
-          variant="link"
-          className="mr-20 text-sm font-semibold text-zinc-600 max-xl:mr-8 max-md:mr-0"
-        >
-          Mais
         </Button>
         {isSignedIn ? (
           <Menu />
